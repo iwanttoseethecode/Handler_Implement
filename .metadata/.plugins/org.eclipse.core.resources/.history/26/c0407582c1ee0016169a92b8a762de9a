@@ -1,0 +1,28 @@
+package com.luoling.example;
+
+
+
+
+public class Handler {
+	
+	
+	private MessageQueue mQueue;
+	private Looper mLooper;
+	
+	
+	//handler的初始化是在主线程中完成的
+	public Handler() {
+		super();
+		//获取主线程的Looper对象
+		mLooper = Looper.myLooper();
+		this.mQueue = mLooper.mQueue;
+				
+	}
+
+
+
+	public void sendMessage(Message msg){
+		mQueue.enqueueMessage(msg);
+	}
+	
+}

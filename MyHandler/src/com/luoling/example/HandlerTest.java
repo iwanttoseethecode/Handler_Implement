@@ -1,0 +1,56 @@
+package com.luoling.example;
+
+import java.util.UUID;
+
+/**
+ * 注意：本demo里面的主线程和子线程的称呼是相对的，创建Looper对象的相称称之为主线程。
+ * 
+ * */
+
+public class HandlerTest {
+	
+	static Handler handler;
+	
+	public static void main(String[] args) {
+		//轮询器初始化
+		Looper.prepare();
+		
+		handler = new Handler(){
+
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				System.out.println(Thread.currentThread().getName() +", received:"+msg.obj.toString() );
+			}
+		};
+			
+		startThread();
+		//开始轮询
+		Looper.loop();
+	}
+	
+	//开启子线程
+	private static void startThread(){
+		for (int i = 0; i < 3; i++) {
+			new Thread(){
+				public void run() {
+					while(true){
+						Message msg = new Message();
+						msg.what = 1;
+						synchronized (UUID.class) {
+							msg.obj = Thread.currentThread().getName()+", send message:"+UUID.randomUUID().toString();
+						}
+						System.out.println(msg.obj.toString());
+						handler.sendMessage(msg);
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				};
+			}.start();
+		}
+	}
+}

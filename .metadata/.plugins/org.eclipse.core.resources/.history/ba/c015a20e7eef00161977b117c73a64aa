@@ -1,0 +1,63 @@
+package com.luoling.handlers;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class MessageQueue {
+	private Message[] items;
+	
+	int putIndex;
+	int takeIndex;
+	
+	AtomicInteger count = new AtomicInteger();
+	
+	Lock lock;
+	Condition notEmpty;
+	Condition notFull;
+	
+	public MessageQueue(){
+		items = new Message[50];
+		lock = new ReentrantLock();
+		notEmpty = lock.newCondition();
+		notFull = lock.newCondition();
+	}
+	
+	public void enqueueMessage(Message msg){
+		lock.lock();
+		while(count.get() == items.length){
+			try {
+				notFull.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		items[putIndex] = msg;
+		putIndex = (++putIndex == items.length) ? 0 : putIndex;
+		count.incrementAndGet();
+		notEmpty.signal();
+		lock.unlock();
+	}
+	
+	public Message next(){
+		lock.lock();
+		while(count.get() == 0){
+			try {
+				notEmpty.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		Message msg = items[takeIndex];
+		items[takeIndex]=null;
+		takeIndex = (++takeIndex == items.length) ? 0 :takeIndex;
+		count.decrementAndGet();
+		notFull.signal();
+		lock.unlock();
+		return msg;
+	}
+	
+}

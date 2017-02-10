@@ -1,0 +1,5 @@
+package com.luoling.handlers;
+
+public class Message {
+
+}

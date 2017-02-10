@@ -1,0 +1,25 @@
+package com.luoling.handlers;
+
+public final class Looper {
+	
+	private static ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
+	
+	private MessageQueue mQueue;
+	
+	private Looper(){
+		mQueue = new MessageQueue();
+	}
+	
+	public static void prepare(){
+		if(sThreadLocal.get()!=null){
+			throw new RuntimeException("Only one Looper mey be create per Thread");
+		}
+		sThreadLocal.set(new Looper());
+		
+	}
+	
+	public static Looper myLooper(){
+		return sThreadLocal.get();
+	}
+	
+}

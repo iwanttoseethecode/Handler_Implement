@@ -1,0 +1,19 @@
+package com.luoling.example;
+
+/**
+ * 注意：本demo里面的主线程和子线程的称呼是相对的，创建Looper对象的相称称之为主线程。
+ * 
+ * */
+
+public class HandlerTest {
+	
+	public static void main(String[] args) {
+		//轮询器初始化
+		Looper.prepare();
+		
+		Handler handler = new Handler(){};
+		
+		//开始轮询
+		Looper.loop();
+	}
+}

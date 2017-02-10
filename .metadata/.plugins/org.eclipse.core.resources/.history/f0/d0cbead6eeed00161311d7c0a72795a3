@@ -1,0 +1,6 @@
+package com.luoling.example;
+
+public class Looper {
+	//每一个 创建Looper对象的线程中都会保存一个looper对象,looper对象保存在ThreadLocal中。
+	static final ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
+}

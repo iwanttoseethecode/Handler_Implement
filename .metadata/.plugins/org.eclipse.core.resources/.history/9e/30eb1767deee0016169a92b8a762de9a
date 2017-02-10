@@ -1,0 +1,54 @@
+package com.luoling.handlers;
+
+import java.util.UUID;
+
+public class Text {
+	
+	static Handler handler;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Looper.prepare();
+		
+		handler = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+				
+				System.out.println(Thread.currentThread().getName() +", received:"+msg );
+			}
+		};
+		startThread();
+		Looper.looper();
+	}
+	
+	private static void startThread(){
+		for (int i = 0; i < 3; i++) {
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					while(true){
+						Message msg = new Message();
+						msg.what =1;
+						synchronized (UUID.class) {
+							msg.obj = Thread.currentThread().getName() + ",send Message:"+UUID.randomUUID().toString();
+						}
+						System.out.println(msg.obj.toString());
+						handler.sendMessage(msg);
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+				}
+			}).start();
+		}
+	}
+
+}

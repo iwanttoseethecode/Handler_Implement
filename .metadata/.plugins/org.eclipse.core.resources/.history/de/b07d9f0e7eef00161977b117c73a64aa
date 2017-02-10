@@ -1,0 +1,25 @@
+package com.luoling.handlers;
+
+public class Handler {
+	
+	private MessageQueue mQueue;
+	private Looper mLooper;
+	
+	public Handler(){
+		mLooper = Looper.myLooper();
+		mQueue = mLooper.mQueue;
+	}
+	
+	public void sendMessage(Message msg){
+		msg.taget = this;
+		mQueue.enqueueMessage(msg);
+	}
+	
+	public void dispatchMessage(Message msg){
+		handleMessage(msg);
+	}
+	
+	public void handleMessage(Message msg){
+		
+	}
+}

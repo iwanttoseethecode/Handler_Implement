@@ -1,0 +1,9 @@
+package com.luoling.handlers;
+
+public class Looper {
+	
+	private static ThreadLocal<Looper> sThreadLocal = new ThreadLocal<Looper>();
+	
+	
+	
+}

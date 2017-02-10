@@ -1,0 +1,12 @@
+package com.luoling.example;
+
+public class MessageQueue {
+	
+	public void enqueueMessage(Message msg){
+		
+	}
+	
+	public Message next(){
+		return null;
+	}
+}

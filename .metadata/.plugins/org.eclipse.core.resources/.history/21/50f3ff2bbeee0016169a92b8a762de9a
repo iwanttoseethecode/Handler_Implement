@@ -1,0 +1,29 @@
+package com.luoling.example;
+
+public class MessageQueue {
+	
+	//通过数组结构存储Message对象
+	Message[] items;
+	
+	int putIndex;
+	int takeIndex;
+	
+	public MessageQueue(){
+		this.items = new Message[50];
+	}
+	
+	/**
+	 * 加入队列
+	 * */
+	public void enqueueMessage(Message msg){
+		
+	}
+	
+	
+	/**
+	 * 出队列
+	 * */
+	public Message next(){
+		return null;
+	}
+}

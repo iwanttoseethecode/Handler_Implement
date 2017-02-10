@@ -1,0 +1,21 @@
+package com.luoling.example;
+
+public class Handler {
+	
+	
+	private MessageQueue mQueue;
+	
+	
+	
+	public Handler() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public void sendMessage(Message msg){
+		mQueue.enqueueMessage(msg);
+	}
+	
+}
